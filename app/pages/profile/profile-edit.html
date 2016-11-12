@@ -39,7 +39,7 @@
             this.$.getProfile.generateRequest();
         },
         getProfileCallback: function(response) {
-            this.profile = response.detail.response;
+            thiis.profile = response.detail.response;
         },
         saveProfile: function() {
             this.$.saveProfileRequest.body = JSON.stringify(this.profile);
