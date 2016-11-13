@@ -80,3 +80,18 @@ http.listen(8080);
 server.use(jsonServer.defaults); // logger, static and cors middlewares
 server.use(router); // Mount router on '/'
 server.listen(5000);
+
+var io = require('socket.io')(http);
+http.listen(8080);
+io.on('connection', function(socket){
+    socket.on('chat message', function(msg){
+        msg = JSON.parse(msg);
+        io.sockets.in(msg.room).emit('private message',
+                    JSON.stringify(msg));
+    });
+    socket.on('subscribe', function(msg) {
+        socket.username = msg.user;
+        socket.room = msg.room;
+        socket.join(msg.room);
+    });
+});
