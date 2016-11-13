@@ -1,3 +1,7 @@
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html" />
+
+<link rel="import" href="../../../../../app/components/pd-search/pd-search.html" />
+
 <dom-module id="pd-drawer">
     <link rel="import" type="css" href="../../../app/components/pd-drawer/pd-drawer.css">
     <style>
@@ -11,13 +15,13 @@
             background-color: #888888;
         }
         .left-drawer ::content {
-            background-color: #004444;
+            /*background-color: #004444;*/
         }
         .right-drawer .pin-btn ::shadow {
             background-color: #3367d6;
         }
         .left-drawer .pin-btn /deep/ {
-            background-color: #880000;
+            background-color: #3367d6;
         }
     </style>
     <template>
@@ -26,6 +30,9 @@
                 <div class="scrim" on-click="closeDrawers"></div>
                 <paper-icon-button class="left-show-btn f-left" icon="menu" title="menu" on-click="toggleLeft"></paper-icon-button>
                 <div class="pd-toolbar-header p-l-05 f-left"><content select=".logo"></content></div>
+                 <pd-search id="search" class="f-right"></pd-search>
+                 <iron-ajax id="searchProfilesRequest" url="http://localhost:5000/profiles" method="GET"
+            handle-as="json" on-response="searchProfilesCallback" with-credentials="true"></iron-ajax>
                 <paper-icon-button class="right-show-btn f-right" icon="more-vert" title="more-vert" on-click="toggleRight"></paper-icon-button>
             </div>
             <div class="main c-n-dark">
@@ -134,6 +141,14 @@
             this.rightLocked = !this.rightLocked;
             this.closeDrawers();
             this.mobileModeCheck();
+        },
+         ready:function(){
+            this.$.search.addEventListener("search", function(event){
+               console.log(event.detail);
+            });
+            this.$.search.addEventListener("searchClosed", function(event){
+                console.log('closed');
+            });
         }
     });
 </script>

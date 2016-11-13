@@ -8,6 +8,7 @@
 <link rel="import" href="../../../../../app/components/pd-card/pd-card.html" />
 <link rel="import" href="../../../../../app/components/pd-select/pd-select.html" />
 <link rel="import" href="../../../../../app/components/pd-search/pd-search.html" />
+<link rel="import" href="../../../../../app/components/pd-search/pd-search.html" />
 
  <dom-module id="staff-list">
     <link rel="stylesheet" href="../../../app/pages/staff/staff.css"/>
@@ -104,6 +105,12 @@
         ready: function() {
             var self = this;
             self.searchProfiles();
+            self.$.search.addEventListener("search", function(event){
+                self.searchProfiles(event.detail);
+            });
+            self.$.search.addEventListener("searchClosed", function(event){
+                self.searchProfiles();
+            });
         },
         searchProfiles:function(search){
             var self = this;
